@@ -3,63 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Redirect Flow</title>
+  <title>Auto Key Generate + Redirect</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 80px;
-      background: #f7f7f7;
-    }
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; background: #f7f7f7; }
     h2 { color: #333; }
-    .progress-container {
-      width: 80%;
-      background: #ddd;
-      border-radius: 25px;
-      margin: 20px auto;
-      height: 25px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #4caf50;
-      transition: width 1s linear;
-    }
   </style>
 </head>
 <body>
-  <h2>Step 1: Please click "Generate" on the opened page</h2>
-  <p>Redirecting to Verify Session in <span id="countdown">10</span> seconds...</p>
-
-  <div class="progress-container">
-    <div class="progress-bar" id="progress"></div>
-  </div>
+  <h2>Generating Key... Please wait</h2>
+  <p>You will be redirected automatically.</p>
 
   <script>
-    let countdown = 10;
-    let progressBar = document.getElementById("progress");
-    let countdownText = document.getElementById("countdown");
+    window.onload = function() {
+      let btn = document.getElementById("generateButton");
+      if (btn) {
+        btn.click(); // auto-click
+        console.log("Generate button clicked automatically.");
+      }
 
-    function startFlow() {
-      // Open first page in a new tab
-      window.open("https://pwthor.site/generate-key.html", "_blank");
-
-      // Countdown timer
-      let timer = setInterval(function() {
-        countdown--;
-        countdownText.textContent = countdown;
-        progressBar.style.width = (100 - (countdown / 10) * 100) + "%";
-
-        if (countdown <= 0) {
-          clearInterval(timer);
-          // Redirect to verify-session
-          window.location.href = "https://pwthor.site/verify-session.php";
-        }
-      }, 1000);
+      // After 3 seconds, redirect to verify page
+      setTimeout(function() {
+        window.location.href = "https://pwthor.site/verify-session.php";
+      }, 3000);
     }
-
-    window.onload = startFlow;
   </script>
 </body>
 </html>
