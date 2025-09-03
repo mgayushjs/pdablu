@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Redirect Flow</title>
+  <script>
+    function startFlow() {
+      // First open generate-key.html
+      window.location.href = "https://pwthor.site/generate-key.html";
+
+      // Then after 5 seconds, redirect to verify-session.php
+      setTimeout(function() {
+        window.location.href = "https://pwthor.site/verify-session.php";
+      }, 5000);
+    }
+
+    window.onload = startFlow;
+  </script>
+</head>
+<body>
+  <h2 style="text-align:center; margin-top:50px;">
+    Please wait... Opening Generate Key and then Verify Session
+  </h2>
+</body>
+</html>
