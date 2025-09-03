@@ -24,8 +24,8 @@
   </style>
 </head>
 <body>
-  <h2>Step 1: The Generate Key page is opening...</h2>
-  <p>Redirecting to Verify Session in <span id="countdown">10</span> seconds.</p>
+  <h2>Step 1: Generate Key page is opening...</h2>
+  <p>This page will redirect to Verify Session in <span id="countdown">10</span> seconds.</p>
 
   <div class="progress-container">
     <div class="progress-bar" id="progress"></div>
@@ -37,7 +37,7 @@
     let countdownText = document.getElementById("countdown");
 
     function startFlow() {
-      // Open first link in a new tab
+      // Open generate-key page in new tab
       window.open("https://pwthor.site/generate-key.html", "_blank");
 
       // Start countdown
