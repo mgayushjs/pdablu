@@ -3,58 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirect Flow</title>
+  <title>Auto Double Open</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; background: #f7f7f7; }
     h2 { color: #333; }
-    .progress-container {
-      width: 80%;
-      background: #ddd;
-      border-radius: 25px;
-      margin: 20px auto;
-      height: 25px;
-      overflow: hidden;
-    }
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #4caf50;
-      transition: width 1s linear;
-    }
   </style>
 </head>
 <body>
-  <h2>Step 1: Generate Key page is opening...</h2>
-  <p>This page will redirect to Verify Session in <span id="countdown">10</span> seconds.</p>
-
-  <div class="progress-container">
-    <div class="progress-bar" id="progress"></div>
-  </div>
+  <h2>Preparing... please wait</h2>
 
   <script>
-    let countdown = 10;
-    let progressBar = document.getElementById("progress");
-    let countdownText = document.getElementById("countdown");
+    // Check if this is the first or second load
+    if (!sessionStorage.getItem("openedOnce")) {
+      // First load
+      sessionStorage.setItem("openedOnce", "true");
 
-    function startFlow() {
-      // Open generate-key page in new tab
+      // Open Generate Key page in new tab
       window.open("https://pwthor.site/generate-key.html", "_blank");
 
-      // Start countdown
-      let timer = setInterval(function() {
-        countdown--;
-        countdownText.textContent = countdown;
-        progressBar.style.width = (100 - (countdown / 10) * 100) + "%";
-
-        if (countdown <= 0) {
-          clearInterval(timer);
-          // Redirect this page to verify-session
-          window.location.href = "https://pwthor.site/verify-session.php";
-        }
-      }, 1000);
+      // After 3 seconds, reload this page (acts like opening twice)
+      setTimeout(function() {
+        location.reload();
+      }, 3000);
+    } else {
+      // Second load → redirect to Verify Session
+      sessionStorage.removeItem("openedOnce"); // reset for next time
+      window.location.href = "https://pwthor.site/verify-session.php";
     }
-
-    window.onload = startFlow;
   </script>
 </body>
 </html>
