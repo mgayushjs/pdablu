@@ -4,23 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Auto Redirect Flow</title>
-  <script>
-    function startFlow() {
-      // First open generate-key.html
-      window.location.href = "https://pwthor.site/generate-key.html";
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 80px;
+      background: #f7f7f7;
+    }
+    h2 { color: #333; }
+    .progress-container {
+      width: 80%;
+      background: #ddd;
+      border-radius: 25px;
+      margin: 20px auto;
+      height: 25px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #4caf50;
+      transition: width 1s linear;
+    }
+  </style>
+</head>
+<body>
+  <h2>Step 1: Please click "Generate" on the opened page</h2>
+  <p>Redirecting to Verify Session in <span id="countdown">10</span> seconds...</p>
 
-      // Then after 5 seconds, redirect to verify-session.php
-      setTimeout(function() {
-        window.location.href = "https://pwthor.site/verify-session.php";
-      }, 5000);
+  <div class="progress-container">
+    <div class="progress-bar" id="progress"></div>
+  </div>
+
+  <script>
+    let countdown = 10;
+    let progressBar = document.getElementById("progress");
+    let countdownText = document.getElementById("countdown");
+
+    function startFlow() {
+      // Open first page in a new tab
+      window.open("https://pwthor.site/generate-key.html", "_blank");
+
+      // Countdown timer
+      let timer = setInterval(function() {
+        countdown--;
+        countdownText.textContent = countdown;
+        progressBar.style.width = (100 - (countdown / 10) * 100) + "%";
+
+        if (countdown <= 0) {
+          clearInterval(timer);
+          // Redirect to verify-session
+          window.location.href = "https://pwthor.site/verify-session.php";
+        }
+      }, 1000);
     }
 
     window.onload = startFlow;
   </script>
-</head>
-<body>
-  <h2 style="text-align:center; margin-top:50px;">
-    Please wait... Opening Generate Key and then Verify Session
-  </h2>
 </body>
 </html>
