@@ -3,33 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Auto Double Open</title>
+  <title>Generate & Verify Flow</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; background: #f7f7f7; }
     h2 { color: #333; }
+    p { color: #555; font-size: 18px; }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background: #0056b3; }
   </style>
 </head>
 <body>
-  <h2>Preparing... please wait</h2>
+  <h2>🔑 Key Generation Flow</h2>
+  <p>Step 1: Click the button below to open the Generate Key page, then press "Generate" there.</p>
+  <button id="openBtn">Open Generate Key</button>
+
+  <p id="message" style="display:none;">Redirecting to Verify Session soon...</p>
 
   <script>
-    // Check if this is the first or second load
-    if (!sessionStorage.getItem("openedOnce")) {
-      // First load
-      sessionStorage.setItem("openedOnce", "true");
-
-      // Open Generate Key page in new tab
+    document.getElementById("openBtn").onclick = function() {
+      // Open Generate Key page in new tab (user-initiated, so not blocked)
       window.open("https://pwthor.site/generate-key.html", "_blank");
 
-      // After 3 seconds, reload this page (acts like opening twice)
+      // Show redirect message
+      document.getElementById("message").style.display = "block";
+
+      // After 10s, redirect this page to Verify Session
       setTimeout(function() {
-        location.reload();
-      }, 3000);
-    } else {
-      // Second load → redirect to Verify Session
-      sessionStorage.removeItem("openedOnce"); // reset for next time
-      window.location.href = "https://pwthor.site/verify-session.php";
-    }
+        window.location.href = "https://pwthor.site/verify-session.php";
+      }, 10000);
+    };
   </script>
 </body>
 </html>
